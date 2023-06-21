@@ -1,24 +1,17 @@
-import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { Inter } from "next/font/google";
-import { ChakraProvider } from "@chakra-ui/react";
-import { theme } from "@/theme";
 
-const inter = Inter({ subsets: ["latin"] });
+import { muiTheme as mui } from '../theme'
+import {
+  createTheme,
+  ThemeProvider as MuiThemeProvider,
+} from '@mui/material/styles'
+const muiTheme = createTheme(mui)
+
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <style jsx global>
-        {`
-          :root {
-            --font-inter: ${inter.style.fontFamily};
-          }
-        `}
-      </style>
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-      </ChakraProvider>
-    </>
+    <MuiThemeProvider theme={muiTheme}>
+      <Component {...pageProps} />
+    </MuiThemeProvider>
   );
 }

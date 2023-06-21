@@ -9,10 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.19",
     "@chakra-ui/next-js": "^2.1.4",
     "@chakra-ui/react": "^2.7.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.5",
+    "@mui/x-data-grid": "^6.8.0",
+    "@mui/x-data-grid-pro": "^6.8.0",
     "@tanstack/react-table": "^8.9.2",
     "@types/node": "20.2.5",
     "@types/react": "18.2.9",
