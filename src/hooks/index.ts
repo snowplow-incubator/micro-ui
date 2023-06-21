@@ -29,15 +29,18 @@ type TableEventEntry = {
   schema: string;
   collectorPayload: string[],
   errors: string[],
+  valid: boolean
 };
 
 const defaultBadEventEntry = {
-  eventType: "Bad Event - See Error",
+  // eventType: "Bad Event - See Error",
   schema: "NA",
+  valid: false,
 
 };
 const defaultGoodEventEntry = {
   errors: ["No Errors"],
+  valid: true
 };
 
 export function useEventTotals() {
@@ -102,7 +105,7 @@ export function mergeTwo(bad: EventEntry[], good: EventEntry[]) {
     let isArr1Depleted = index1 >= badEvents.length;
     let isArr2Depleted = index2 >= goodEvents.length;
 
-    if (!isArr1Depleted && (isArr2Depleted || (badEvents[index1].timestamp < goodEvents[index2].timestamp))) {
+    if (!isArr1Depleted && (isArr2Depleted || (badEvents[index1].timestamp > goodEvents[index2].timestamp))) {
       merged[current] = badEvents[index1];
       index1++;
     } else {
@@ -115,12 +118,15 @@ export function mergeTwo(bad: EventEntry[], good: EventEntry[]) {
   return merged;
 }
 
-function buildBadEventEntryList(badEvents: EventEntry[]) {
+export function buildBadEventEntryList(badEvents: EventEntry[]) {
   let merged: TableEventEntry[] = [];
 
   for (let i = 0; i < badEvents.length; i++) {
     let { contexts, event, rawEvent, rawEvent: { parameters: { eid, dtm } }, collectorPayload, errors, } = badEvents[i]
-    let newEvent: TableEventEntry = { ...defaultBadEventEntry, contexts, id: eid, timestamp: dtm, event, rawEvent, collectorPayload, errors }
+    let testJson = JSON.parse(errors[1])
+    let eventType = testJson.data.payload.enriched.event
+    let schema = testJson.data.payload.enriched.schema
+    let newEvent: TableEventEntry = { ...defaultBadEventEntry, contexts, id: eid, timestamp: dtm, event, rawEvent, schema, collectorPayload, errors, eventType }
     merged.push(newEvent)
   }
   return merged;
