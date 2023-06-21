@@ -5,7 +5,9 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 type EventEntry = {
   id: string;
   contexts: string[];
-  event: Record<string, unknown>;
+  event: {
+    appId: string
+  } & Record<string, unknown>;
   eventType: string;
   rawEvent: {
     parameters: {
@@ -20,6 +22,7 @@ type EventEntry = {
 };
 
 type TableEventEntry = {
+  app_id: string;
   id: string;
   contexts: string[];
   event: Record<string, unknown>;
@@ -33,7 +36,6 @@ type TableEventEntry = {
 };
 
 const defaultBadEventEntry = {
-  // eventType: "Bad Event - See Error",
   schema: "NA",
   valid: false,
 
@@ -118,15 +120,14 @@ export function mergeTwo(bad: EventEntry[], good: EventEntry[]) {
   return merged;
 }
 
-export function buildBadEventEntryList(badEvents: EventEntry[]) {
+function buildBadEventEntryList(badEvents: EventEntry[]) {
   let merged: TableEventEntry[] = [];
 
   for (let i = 0; i < badEvents.length; i++) {
     let { contexts, event, rawEvent, rawEvent: { parameters: { eid, dtm } }, collectorPayload, errors, } = badEvents[i]
-    let testJson = JSON.parse(errors[1])
-    let eventType = testJson.data.payload.enriched.event
-    let schema = testJson.data.payload.enriched.schema
-    let newEvent: TableEventEntry = { ...defaultBadEventEntry, contexts, id: eid, timestamp: dtm, event, rawEvent, schema, collectorPayload, errors, eventType }
+    let errorJson = JSON.parse(errors[1])
+    const { event: eventType, schema, app_id } = errorJson.data.payload.enriched
+    let newEvent: TableEventEntry = { ...defaultBadEventEntry, app_id, contexts, id: eid, timestamp: dtm, event, rawEvent, schema, collectorPayload, errors, eventType }
     merged.push(newEvent)
   }
   return merged;
@@ -136,8 +137,8 @@ function buildGoodEventEntryList(goodEvents: EventEntry[]) {
   let merged: TableEventEntry[] = [];
 
   for (let i = 0; i < goodEvents.length; i++) {
-    let { contexts, event, rawEvent: { parameters: { eid, dtm } }, rawEvent, schema, collectorPayload, eventType } = goodEvents[i]
-    let newEvent: TableEventEntry = { ...defaultGoodEventEntry, id: eid, timestamp: dtm, contexts, event, rawEvent, schema, collectorPayload, eventType }
+    let { contexts, event, event: { app_id }, rawEvent: { parameters: { eid, dtm } }, rawEvent, schema, collectorPayload, eventType } = goodEvents[i]
+    let newEvent: TableEventEntry = { ...defaultGoodEventEntry, app_id, contexts, id: eid, timestamp: dtm, event, rawEvent, schema, collectorPayload, eventType }
     merged.push(newEvent)
   }
   return merged;
