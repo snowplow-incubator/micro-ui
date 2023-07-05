@@ -1,5 +1,5 @@
 import { useGoodEvents, useBadEvents, mergeTwo } from "@/hooks";
-import { DataGridPro, GridColDef, GridRowParams, GridToolbar } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridRowParams, GridToolbar, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid-pro';
 import {
   Button,
   Grid,
@@ -53,12 +53,13 @@ const columns: GridColDef[] = [
 
 ];
 
-
-
-
-function DetailPanelContent({ row: rowProp }: { row: Error }) {
+function ErrorPanel({ row: rowProp }: { row: Error }) {
   let errorJson = JSON.parse(rowProp.errors[1])
+  console.log("errorJson")
   console.log(errorJson)
+  const { messages } = errorJson.data.failure
+  // console.log(messages)
+  // console.log(errorJson.data.failure)
   return (
     <Stack
       sx={{ py: 2, height: '100%', boxSizing: 'border-box' }}
@@ -69,9 +70,12 @@ function DetailPanelContent({ row: rowProp }: { row: Error }) {
           <Grid container>
             <Grid item md={6}>
               <Typography variant="body2" color="textSecondary">
-                Error Types
+                Error Messages
               </Typography>
-              <Typography variant="body1">{rowProp.errors}</Typography>
+              {messages.map((message: Any) => (
+                <Typography variant="body1">test</Typography>
+              ))}
+
             </Grid>
           </Grid>
         </Stack>
@@ -108,11 +112,22 @@ export function EventsTable() {
     setEvents(good)
   }
 
-  const getDetailPanelContent = useCallback(
+  const getErrorPanel = useCallback(
     ({ row }: GridRowParams) =>
-      row.valid === false ? <DetailPanelContent row={row} /> : null,
+      row.valid === false ? <ErrorPanel row={row} /> : null,
     [],
   );
+
+  function CustomToolbar() {
+    return (
+      <div style={{ position: 'fixed', bottom: 10 }}>
+        <div>
+          Test toolbar
+        </div>
+        <GridToolbarColumnsButton />
+      </div>
+    );
+  }
 
   return (
     <Grid container >
@@ -152,7 +167,7 @@ export function EventsTable() {
           unstable_headerFilters
           slots={{
             headerFilterMenu: null,
-            toolbar: GridToolbar,
+            toolbar: CustomToolbar,
           }}
           slotProps={{
             toolbar: {
@@ -161,7 +176,7 @@ export function EventsTable() {
             },
 
           }}
-          getDetailPanelContent={getDetailPanelContent} />
+          getDetailPanelContent={getErrorPanel} />
       </Grid>
     </Grid >
   );
