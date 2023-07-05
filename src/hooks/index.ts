@@ -10,13 +10,13 @@ type EventEntry = {
   rawEvent: {
     parameters: {
       eid: string;
-      dtm: string
-    }
+      dtm: string;
+    };
   } & Record<string, unknown>;
   schema: string;
-  collectorPayload: string[],
-  errors: string[]
-  timestamp: string
+  collectorPayload: string[];
+  errors: string[];
+  timestamp: string;
 };
 
 type TableEventEntry = {
@@ -27,20 +27,19 @@ type TableEventEntry = {
   timestamp: string;
   rawEvent: Record<string, unknown>;
   schema: string;
-  collectorPayload: string[],
-  errors: string[],
-  valid: boolean
+  collectorPayload: string[];
+  errors: string[];
+  valid: boolean;
 };
 
 const defaultBadEventEntry = {
   // eventType: "Bad Event - See Error",
   schema: "NA",
   valid: false,
-
 };
 const defaultGoodEventEntry = {
   errors: ["No Errors"],
-  valid: true
+  valid: true,
 };
 
 export function useEventTotals() {
@@ -60,7 +59,8 @@ export function useEventTotals() {
 export function useGoodEvents() {
   const { data, error, isLoading } = useSWR(
     process.env.NEXT_PUBLIC_MICRO_HOSTNAME + "/micro/good",
-    fetcher
+    fetcher,
+    { refreshInterval: 3000 }
   );
 
   return {
@@ -90,22 +90,25 @@ export function mergeTwo(bad: EventEntry[], good: EventEntry[]) {
   let current = 0;
 
   if (!bad) {
-    return merged
+    return merged;
   }
 
   if (!good) {
-    return merged
+    return merged;
   }
 
-  let badEvents = buildBadEventEntryList(bad)
-  let goodEvents = buildGoodEventEntryList(good)
+  let badEvents = buildBadEventEntryList(bad);
+  let goodEvents = buildGoodEventEntryList(good);
 
-  while (current < (badEvents.length + goodEvents.length)) {
-
+  while (current < badEvents.length + goodEvents.length) {
     let isArr1Depleted = index1 >= badEvents.length;
     let isArr2Depleted = index2 >= goodEvents.length;
 
-    if (!isArr1Depleted && (isArr2Depleted || (badEvents[index1].timestamp > goodEvents[index2].timestamp))) {
+    if (
+      !isArr1Depleted &&
+      (isArr2Depleted ||
+        badEvents[index1].timestamp > goodEvents[index2].timestamp)
+    ) {
       merged[current] = badEvents[index1];
       index1++;
     } else {
@@ -122,12 +125,32 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
   let merged: TableEventEntry[] = [];
 
   for (let i = 0; i < badEvents.length; i++) {
-    let { contexts, event, rawEvent, rawEvent: { parameters: { eid, dtm } }, collectorPayload, errors, } = badEvents[i]
-    let testJson = JSON.parse(errors[1])
-    let eventType = testJson.data.payload.enriched.event
-    let schema = testJson.data.payload.enriched.schema
-    let newEvent: TableEventEntry = { ...defaultBadEventEntry, contexts, id: eid, timestamp: dtm, event, rawEvent, schema, collectorPayload, errors, eventType }
-    merged.push(newEvent)
+    let {
+      contexts,
+      event,
+      rawEvent,
+      rawEvent: {
+        parameters: { eid, dtm },
+      },
+      collectorPayload,
+      errors,
+    } = badEvents[i];
+    let testJson = JSON.parse(errors[1]);
+    let eventType = testJson.data.payload.enriched.event;
+    let schema = testJson.data.payload.enriched.schema;
+    let newEvent: TableEventEntry = {
+      ...defaultBadEventEntry,
+      contexts,
+      id: eid,
+      timestamp: dtm,
+      event,
+      rawEvent,
+      schema,
+      collectorPayload,
+      errors,
+      eventType,
+    };
+    merged.push(newEvent);
   }
   return merged;
 }
@@ -136,9 +159,29 @@ function buildGoodEventEntryList(goodEvents: EventEntry[]) {
   let merged: TableEventEntry[] = [];
 
   for (let i = 0; i < goodEvents.length; i++) {
-    let { contexts, event, rawEvent: { parameters: { eid, dtm } }, rawEvent, schema, collectorPayload, eventType } = goodEvents[i]
-    let newEvent: TableEventEntry = { ...defaultGoodEventEntry, id: eid, timestamp: dtm, contexts, event, rawEvent, schema, collectorPayload, eventType }
-    merged.push(newEvent)
+    let {
+      contexts,
+      event,
+      rawEvent: {
+        parameters: { eid, dtm },
+      },
+      rawEvent,
+      schema,
+      collectorPayload,
+      eventType,
+    } = goodEvents[i];
+    let newEvent: TableEventEntry = {
+      ...defaultGoodEventEntry,
+      id: eid,
+      timestamp: dtm,
+      contexts,
+      event,
+      rawEvent,
+      schema,
+      collectorPayload,
+      eventType,
+    };
+    merged.push(newEvent);
   }
   return merged;
 }

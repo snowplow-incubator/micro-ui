@@ -32,9 +32,7 @@ export function Content() {
         <EventChart />
       </Flex>
 
-      <Flex>
-        <EventsTable />
-      </Flex>
+      <Flex>{/* <EventsTable /> */}</Flex>
     </Box>
   );
 }
