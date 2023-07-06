@@ -1,5 +1,5 @@
 import { useGoodEvents, useBadEvents, mergeTwo } from "@/hooks";
-import { DataGridPro, GridColDef, GridRowParams, GridToolbar, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridRowParams, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid-pro';
 import {
   Button,
   Grid,
@@ -7,7 +7,6 @@ import {
   Paper,
   Typography,
 } from '@mui/material'
-import { styled } from '@mui/material/styles'
 import { useCallback, useEffect, useState } from "react";
 
 type TableEventEntry = {
@@ -54,12 +53,6 @@ const columns: GridColDef[] = [
 ];
 
 function ErrorPanel({ row: rowProp }: { row: Error }) {
-  let errorJson = JSON.parse(rowProp.errors[1])
-  console.log("errorJson")
-  console.log(errorJson)
-  const { messages } = errorJson.data.failure
-  // console.log(messages)
-  // console.log(errorJson.data.failure)
   return (
     <Stack
       sx={{ py: 2, height: '100%', boxSizing: 'border-box' }}
@@ -67,17 +60,11 @@ function ErrorPanel({ row: rowProp }: { row: Error }) {
     >
       <Paper sx={{ flex: 1, mx: 'auto', width: '90%', p: 1 }}>
         <Stack direction="column" spacing={1} sx={{ height: 1 }}>
-          <Grid container>
-            <Grid item md={6}>
-              <Typography variant="body2" color="textSecondary">
-                Error Messages
-              </Typography>
-              {messages.map((message: Any) => (
-                <Typography variant="body1">test</Typography>
-              ))}
-
-            </Grid>
-          </Grid>
+          <Typography variant="body2" color="textSecondary">
+            Error Messages
+          </Typography>
+          <Typography variant="body1">{rowProp.errors[0]}</Typography>
+          <Typography variant="body1">{rowProp.errors[1]}</Typography>
         </Stack>
       </Paper>
     </Stack>
@@ -89,11 +76,11 @@ export function EventsTable() {
   const { goodEvents } = useGoodEvents();
   const { badEvents } = useBadEvents();
   const [events, setEvents] = useState<TableEventEntry[]>([])
+  const [reset, setReset] = useState<boolean>(false)
 
   useEffect(() => {
     let newEvents: TableEventEntry[] = mergeTwo(badEvents, goodEvents)
     setEvents(newEvents)
-    console.log(badEvents)
   }, [goodEvents, badEvents])
 
   function handleAllClick() {
@@ -106,6 +93,38 @@ export function EventsTable() {
     const bad = allEvent.filter(item => item.valid === false)
     setEvents(bad)
   }
+
+  // useEffect(() => {
+  //   if (reset) {
+  //     const resetReq = async () => {
+  //       try {
+  //         const res = await fetch(
+  //           process.env.NEXT_PUBLIC_MICRO_HOSTNAME + "/micro/reset",
+  //         );
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     }
+  //     resetReq()
+  //     setReset(false)
+  //   }
+
+  // }, [reset])
+
+  // function handleReset() {
+  //   setReset(true)
+  // }
+
+  const handleReset = async () => {
+    try {
+      const res = await fetch(
+        process.env.NEXT_PUBLIC_MICRO_HOSTNAME + "/micro/reset",
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   function handleGoodClick() {
     let allEvent = mergeTwo(badEvents, goodEvents)
     const good = allEvent.filter(item => item.valid === true)
@@ -120,18 +139,16 @@ export function EventsTable() {
 
   function CustomToolbar() {
     return (
-      <div style={{ position: 'fixed', bottom: 10 }}>
-        <div>
-          Test toolbar
-        </div>
-        <GridToolbarColumnsButton />
-      </div>
-    );
+      // TO DO: Add further options here
+      <GridToolbarColumnsButton />);
   }
 
   return (
     <Grid container >
       <Grid item xs={12}>
+        <Button onClick={handleReset} >
+          Reset
+        </Button>
         <Button onClick={() => handleAllClick()} >
           All
         </Button>
