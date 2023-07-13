@@ -1,4 +1,5 @@
-import { useGoodEvents } from "@/hooks";
+import { useGoodEvents, useBadEvents } from "@/hooks";
+// import { createUpdatedGroupsManager } from "@mui/x-data-grid-pro/utils/tree/utils";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,7 +17,7 @@ import "chartjs-adapter-luxon";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import useSWR from "swr";
+// import useSWR from "swr";
 
 ChartJS.register(
   CategoryScale,
@@ -55,18 +56,20 @@ export const getDefaultOptions: () => ChartOptions<"bar"> = () => ({
 
 export function EventChart() {
   const { goodEvents } = useGoodEvents();
+  const { badEvents } = useBadEvents();
   const [data, setData] = useState<ChartData<"bar">>();
   const [options, setOptions] = useState(getDefaultOptions());
 
   console.log(goodEvents);
 
   useEffect(() => {
-    const dataset =
+    const goodData =
       goodEvents &&
       goodEvents.reduce((accum, current) => {
         const expectedTstampKeyMinutes = new Date(
           current.event.derived_tstamp
         ).setSeconds(0, 0);
+        console.log(expectedTstampKeyMinutes)
         if (accum[expectedTstampKeyMinutes]) {
           accum[expectedTstampKeyMinutes] = accum[
             expectedTstampKeyMinutes
@@ -77,12 +80,41 @@ export function EventChart() {
         return accum;
       }, {});
 
-    if (!dataset) {
+    if (!goodData) {
       return;
     }
-    const trueDataset = Object.keys(dataset).map((element) => ({
+    const goodDataset = Object.keys(goodData).map((element) => ({
       x: Number(element),
-      y: dataset[element],
+      y: goodData[element],
+    }));
+
+    const badData =
+      badEvents &&
+      badEvents.reduce((accum, current) => {
+        const expectedTstampKeyMinutes =
+          new Date(current.rawEvent.parameters.dtm * 1000 / 1000).setSeconds(0, 0)
+
+        console.log(" bad expectedTstampKeyMinutes")
+        console.log(expectedTstampKeyMinutes)
+
+        if (accum[expectedTstampKeyMinutes]) {
+          accum[expectedTstampKeyMinutes] = accum[
+            expectedTstampKeyMinutes
+          ] += 1;
+        } else {
+          accum[expectedTstampKeyMinutes] = accum[expectedTstampKeyMinutes] = 1;
+        }
+        return accum;
+      }, {});
+
+
+    if (!badData) {
+      return;
+    }
+    console.log(badData)
+    const badDataset = Object.keys(badData).map((element) => ({
+      x: Number(element),
+      y: badData[element],
     }));
 
     setOptions(getDefaultOptions());
@@ -91,13 +123,19 @@ export function EventChart() {
       datasets: [
         {
           label: "Good Events",
-          data: trueDataset,
+          data: goodDataset,
           backgroundColor: "rgb(255, 99, 132)",
+          stack: "Stack 0",
+        },
+        {
+          label: "Bad Events",
+          data: badDataset,
+          backgroundColor: "rgb(0, 99, 132)",
           stack: "Stack 0",
         },
       ],
     });
-  }, [goodEvents.length]);
+  }, [goodEvents, badEvents]);
 
   if (!data) {
     return null;
