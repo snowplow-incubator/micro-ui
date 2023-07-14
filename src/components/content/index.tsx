@@ -14,7 +14,7 @@ import { EventsTable } from "./events-table";
 export function Content() {
   const { eventTotals, error, isLoading } = useEventTotals();
   return (
-    <Box maxW={1000}>
+    <Box maxW={800}>
       <Flex
         borderWidth={1}
         borderRadius={12}
@@ -32,7 +32,7 @@ export function Content() {
         <EventChart />
       </Flex>
 
-      <Flex>{/* <EventsTable /> */}</Flex>
+      <Flex><EventsTable /></Flex>
     </Box>
   );
 }
