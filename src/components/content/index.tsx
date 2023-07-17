@@ -1,6 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { EventChart } from "./chart";
-import { EventsTable } from "./events-table";
+import { EventsTable } from "./events_table";
 import { StatsCard } from "./stats";
 
 export function Content() {
