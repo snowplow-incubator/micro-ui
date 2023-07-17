@@ -1,19 +1,9 @@
-import { useEventTotals } from "@/hooks";
-import {
-  Box,
-  Flex,
-  Stat,
-  StatGroup,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
-} from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { EventChart } from "./chart";
 import { EventsTable } from "./events-table";
-import { StatsCard } from "./stats"
+import { StatsCard } from "./stats";
 
 export function Content() {
-  const { eventTotals, error, isLoading } = useEventTotals();
   return (
     <Box maxW={800}>
       <Flex
@@ -28,10 +18,9 @@ export function Content() {
       <Flex>
         <EventChart />
       </Flex>
-
-      <Flex><EventsTable /></Flex>
+      <Flex>
+        <EventsTable />
+      </Flex>
     </Box>
   );
 }
-
-
