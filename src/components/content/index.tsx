@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { EventChart } from "./chart";
 import { EventsTable } from "./events-table";
+import { StatsCard } from "./stats"
 
 export function Content() {
   const { eventTotals, error, isLoading } = useEventTotals();
@@ -22,11 +23,7 @@ export function Content() {
         padding={5}
         m={5}
       >
-        <StatGroup>
-          <TotalEventsStat />
-          <GoodEventsStat />
-          <BadEventsStat />
-        </StatGroup>
+        <StatsCard />
       </Flex>
       <Flex>
         <EventChart />
@@ -37,38 +34,4 @@ export function Content() {
   );
 }
 
-export function GoodEventsStat() {
-  const { eventTotals } = useEventTotals();
 
-  return (
-    <Stat>
-      <StatLabel>Good Events ✅</StatLabel>
-      <StatNumber>{eventTotals?.good}</StatNumber>
-      <StatHelpText>Number of Good Events recorded</StatHelpText>
-    </Stat>
-  );
-}
-
-export function BadEventsStat() {
-  const { eventTotals } = useEventTotals();
-
-  return (
-    <Stat>
-      <StatLabel>Bad Events 🔴</StatLabel>
-      <StatNumber>{eventTotals?.bad}</StatNumber>
-      <StatHelpText>Number of Bad Events recorded</StatHelpText>
-    </Stat>
-  );
-}
-
-export function TotalEventsStat() {
-  const { eventTotals } = useEventTotals();
-
-  return (
-    <Stat>
-      <StatLabel>Total Events ⭐</StatLabel>
-      <StatNumber>{eventTotals?.total}</StatNumber>
-      <StatHelpText>Total Events recorded</StatHelpText>
-    </Stat>
-  );
-}
