@@ -4,13 +4,9 @@ import {
   GridRowParams,
   GridToolbarColumnsButton,
 } from "@mui/x-data-grid-pro";
-import { Stack, Paper, Typography } from "@mui/material";
 import { useCallback } from "react";
 import { TableEventEntry } from ".";
-
-type Error = {
-  errors: string[];
-};
+import { ErrorPanel } from "./ErrorPanel";
 
 const columns: GridColDef[] = [
   {
@@ -43,25 +39,6 @@ const columns: GridColDef[] = [
     width: 200,
   },
 ];
-
-function ErrorPanel({ row: rowProp }: { row: Error }) {
-  return (
-    <Stack
-      sx={{ py: 2, height: "100%", boxSizing: "border-box" }}
-      direction="column"
-    >
-      <Paper sx={{ flex: 1, mx: "auto", width: "90%", p: 1 }}>
-        <Stack direction="column" spacing={1} sx={{ height: 1 }}>
-          <Typography variant="body2" color="textSecondary">
-            Error Messages
-          </Typography>
-          <Typography variant="body1">{rowProp.errors[0]}</Typography>
-          <Typography variant="body1">{rowProp.errors[1]}</Typography>
-        </Stack>
-      </Paper>
-    </Stack>
-  );
-}
 
 export function TableGrid({ events }: { events: TableEventEntry[] }) {
   const getErrorPanel = useCallback(
