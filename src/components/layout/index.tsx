@@ -1,9 +1,9 @@
-import { Flex } from "@chakra-ui/react";
+import Box from "@mui/material/Box";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <Flex h="100vh" flexDir="row" maxW={2000}>
+    <Box height="100vh" flexDirection="row" maxWidth={2000}>
       {children}
-    </Flex>
+    </Box>
   );
 }

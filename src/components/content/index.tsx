@@ -1,26 +1,23 @@
-import { Box, Flex } from "@chakra-ui/react";
+import Box from "@mui/material/Box";
 import { EventChart } from "./chart";
 import { EventsTable } from "./events_table";
 import { StatsCard } from "./stats";
+import Grid from "@mui/material/Grid";
 
 export function Content() {
   return (
-    <Box maxW={800}>
-      <Flex
-        borderWidth={1}
-        borderRadius={12}
-        borderColor="gray"
-        padding={5}
-        m={5}
-      >
-        <StatsCard />
-      </Flex>
-      <Flex>
-        <EventChart />
-      </Flex>
-      <Flex>
-        <EventsTable />
-      </Flex>
+    <Box sx={{ width: "100%" }} p={2}>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <StatsCard />
+        </Grid>
+        <Grid item xs={12}>
+          <EventChart />
+        </Grid>
+        <Grid item xs={12}>
+          <EventsTable />
+        </Grid>
+      </Grid>
     </Box>
   );
 }
