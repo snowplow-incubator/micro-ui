@@ -1,5 +1,6 @@
 import { useMicroReset } from "@/hooks";
-import { Button } from "@mui/material";
+import { Button, SvgIcon, Typography } from "@mui/material";
+import RotateIcon from "./rotate.svg";
 
 export function ResetButton() {
   const { resetMicro } = useMicroReset();
@@ -11,8 +12,18 @@ export function ResetButton() {
     }
   };
   return (
-    <Button variant="contained" onClick={handleReset}>
-      Reset
+    <Button
+      sx={{
+        padding: "10px 26px",
+        borderRadius: "8px",
+        border: "4px solid #825CC5",
+      }}
+      onClick={handleReset}
+    >
+      <SvgIcon component={RotateIcon} />
+      <Typography ml="16px" variant="h3">
+        Reset
+      </Typography>
     </Button>
   );
 }

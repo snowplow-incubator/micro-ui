@@ -1,15 +1,19 @@
 import Box from "@mui/material/Box";
 import { EventChart } from "./chart";
 import { EventsTable } from "./events_table";
-import { StatsCard } from "./stats";
+import { StatsCards } from "./stats";
 import Grid from "@mui/material/Grid";
+import { ResetButton } from "./common";
 
 export function Content() {
   return (
-    <Box sx={{ width: "100%" }} p={2}>
+    <Box sx={{ width: "100%" }} p={3}>
       <Grid container spacing={2}>
         <Grid item xs={8}>
-          <StatsCard />
+          <StatsCards />
+        </Grid>
+        <Grid item xs={2}>
+          <ResetButton />
         </Grid>
         <Grid item xs={12}>
           <EventChart />
