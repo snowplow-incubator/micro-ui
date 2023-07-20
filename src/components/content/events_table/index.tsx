@@ -53,7 +53,7 @@ export function EventsTable() {
       <Grid item xs={12}>
         <TableFilters handleFilter={handleFilter} />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <TableGrid events={events} />
       </Grid>
     </Grid>

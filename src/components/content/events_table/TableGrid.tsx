@@ -7,6 +7,7 @@ import {
 import { useCallback } from "react";
 import { TableEventEntry } from ".";
 import { ErrorPanel } from "./ErrorPanel";
+import { Box } from "@mui/material";
 
 const columns: GridColDef[] = [
   {
@@ -59,9 +60,9 @@ export function TableGrid({ events }: { events: TableEventEntry[] }) {
       rows={events}
       columns={columns}
       pagination={true}
-      pageSizeOptions={[5, 10, 25]}
+      pageSizeOptions={[10, 25]}
       initialState={{
-        pagination: { paginationModel: { pageSize: 5 } },
+        pagination: { paginationModel: { pageSize: 10 } },
         columns: {
           columnVisibilityModel: {
             avatar: false,

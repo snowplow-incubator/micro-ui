@@ -6,6 +6,9 @@ import { AutocompleteClassKey } from "@mui/material/Autocomplete";
 import { ToggleButtonClassKey } from "@mui/material/ToggleButton";
 import { ToggleButtonGroupClassKey } from "@mui/material/ToggleButtonGroup";
 import { colors } from "./colors";
+import { Rubik } from "next/font/google";
+
+export const rubik = Rubik({ subsets: ["latin"] });
 
 type SnColor = {
   "900": string;
@@ -316,7 +319,7 @@ export const muiTheme: ThemeOptions = {
       contrastText: common.white,
     },
     background: {
-      default: theme.color.grey["200"],
+      default: "#f2f4f7",
       chip: theme.color.information["100"],
     },
     text: {
@@ -355,12 +358,12 @@ export const muiTheme: ThemeOptions = {
     h1: {
       fontSize: "32px",
       fontWeight: theme.fontWeight.normal,
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
     },
     h2: {
       fontSize: "28px",
       fontWeight: theme.fontWeight.normal,
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
       lineHeight: "32px",
     },
     h3: {
@@ -368,23 +371,23 @@ export const muiTheme: ThemeOptions = {
       letterSpacing: "0px",
       lineHeight: "24px",
       fontWeight: theme.fontWeight.normal,
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
     },
     h4: {
       fontSize: "20px",
       fontWeight: theme.fontWeight.normal,
       letterSpacing: "0px",
       lineHeight: "20px",
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
     },
     h5: {
       fontSize: "18px",
       fontWeight: theme.fontWeight.normal,
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
       lineHeight: "20px",
     },
     h6: {
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
     },
     body1: {
       fontSize: "16px",
@@ -405,12 +408,12 @@ export const muiTheme: ThemeOptions = {
     h1semibold: {
       fontSize: "32px",
       fontWeight: theme.fontWeight.bold,
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
     },
     h2semibold: {
       fontSize: "28px",
       fontWeight: theme.fontWeight.bold,
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
       lineHeight: "32px",
     },
     h3semibold: {
@@ -418,24 +421,24 @@ export const muiTheme: ThemeOptions = {
       fontSize: "24px",
       letterSpacing: "0px",
       lineHeight: "24px",
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
     },
     h4semibold: {
       fontSize: "20px",
       fontWeight: theme.fontWeight.bold,
       letterSpacing: "0px",
       lineHeight: "20px",
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
     },
     h5semibold: {
       fontSize: "18px",
       fontWeight: theme.fontWeight.bold,
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
       lineHeight: "20px",
     },
     h6semibold: {
       fontWeight: theme.fontWeight.bold,
-      fontFamily: "Rubik, sans-serif",
+      fontFamily: rubik.style.fontFamily,
     },
     body1semibold: {
       fontSize: "16px",
@@ -782,12 +785,12 @@ export const muiTheme: ThemeOptions = {
           "&:hover": {
             boxShadow: "none",
             backgroundColor: "transparent",
-            textDecoration: "underline",
+            textDecoration: "none",
           },
           "&:active": {
             boxShadow: "none",
             backgroundColor: "transparent",
-            textDecoration: "underline",
+            textDecoration: "none",
           },
           "&.Mui-disabled": {
             border: "none",
@@ -1242,7 +1245,7 @@ export const muiTheme: ThemeOptions = {
       styleOverrides: {
         root: {
           "& .MuiTableCell-root": {
-            fontFamily: "Rubik, sans-serif",
+            fontFamily: rubik.style.fontFamily,
             textTransform: "uppercase",
           },
         },

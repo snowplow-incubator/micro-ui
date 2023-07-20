@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { getDefaultBarChartOptions } from "./options";
 import { aggregateMicroDataset } from "./utils";
+import { Box } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -52,16 +53,18 @@ export function EventChart() {
     setBaChartData({
       datasets: [
         {
-          label: "Good Events",
+          label: "Good",
           data: goodDataset,
-          backgroundColor: "rgb(255, 99, 132)",
-          stack: "Stack 0",
+          backgroundColor: "#0B7F86",
+          barPercentage: 0.8,
+          categoryPercentage: 0.7,
         },
         {
-          label: "Bad Events",
+          label: "Bad",
+          barPercentage: 0.8,
+          categoryPercentage: 0.7,
           data: badDataset,
-          backgroundColor: "rgb(0, 99, 132)",
-          stack: "Stack 0",
+          backgroundColor: "#DD3327",
         },
       ],
     });
@@ -71,5 +74,9 @@ export function EventChart() {
     return null;
   }
 
-  return <Bar options={options} data={barChartData} />;
+  return (
+    <Box sx={{ height: "300px" }}>
+      <Bar options={options} data={barChartData} />
+    </Box>
+  );
 }
