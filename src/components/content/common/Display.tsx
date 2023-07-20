@@ -1,7 +1,13 @@
 import { rubik } from "@/theme";
 import { Box, Paper, Typography } from "@mui/material";
 
-export function Display({ children, title, subtitle }) {
+interface DisplayProps {
+  children: React.ReactNode;
+  title: string;
+  subtitle?: string;
+}
+
+export function Display({ children, title, subtitle }: DisplayProps) {
   return (
     <Paper elevation={2} sx={{ borderRadius: "10px", padding: "28px" }}>
       <Box mb={4}>

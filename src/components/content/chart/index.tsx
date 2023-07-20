@@ -32,7 +32,7 @@ export function EventChart() {
   const { goodEvents } = useGoodEvents();
   const { badEvents } = useBadEvents();
   const [barChartData, setBaChartData] = useState<ChartData<"bar">>();
-  const [options, setOptions] = useState(getDefaultBarChartOptions());
+  const [options, setOptions] = useState(getDefaultBarChartOptions(false));
 
   useEffect(() => {
     if (!goodEvents || !badEvents) {
@@ -48,7 +48,8 @@ export function EventChart() {
       (event) => (event.rawEvent.parameters.dtm * 1000) / 1000
     );
 
-    setOptions(getDefaultBarChartOptions());
+    const hasEvents = Boolean(goodDataset.length && badDataset.length);
+    setOptions(getDefaultBarChartOptions(hasEvents));
 
     setBaChartData({
       datasets: [

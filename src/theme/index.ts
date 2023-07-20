@@ -506,7 +506,6 @@ export const muiTheme: ThemeOptions = {
     MuiIcon: {
       defaultProps: { fontSize: "inherit" },
     },
-
     MuiAlert: {
       styleOverrides: {
         root: {
@@ -715,7 +714,6 @@ export const muiTheme: ThemeOptions = {
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: theme.radii.medium,
           fontWeight: 500,
         },
         clickable: {

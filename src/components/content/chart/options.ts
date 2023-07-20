@@ -1,7 +1,9 @@
 import { ChartOptions } from "chart.js";
 import { DateTime } from "luxon";
 
-export const getDefaultBarChartOptions: () => ChartOptions<"bar"> = () => ({
+export const getDefaultBarChartOptions: (
+  hasData: boolean
+) => ChartOptions<"bar"> = (hasData) => ({
   plugins: {
     title: {
       display: false,
@@ -54,6 +56,9 @@ export const getDefaultBarChartOptions: () => ChartOptions<"bar"> = () => ({
         color: "#000",
         precision: 0,
         callback: function (value, index) {
+          if (!hasData) {
+            return null;
+          }
           if (value !== 0) return value;
         },
       },

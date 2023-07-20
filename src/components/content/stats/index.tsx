@@ -36,13 +36,21 @@ export function StatsCards() {
   );
 }
 
+interface StatsCardBaseProps {
+  boxColor: string;
+  circleColor: string;
+  IconComponent: React.ElementType<any>;
+  title: string;
+  statsCount?: number;
+}
+
 function StatsCardBase({
   boxColor,
   circleColor,
   IconComponent,
   title,
   statsCount,
-}) {
+}: StatsCardBaseProps) {
   return (
     <Box
       sx={{ width: 284 }}
