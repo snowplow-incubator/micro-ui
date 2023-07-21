@@ -1,15 +1,12 @@
 import {
   DataGridPro,
   GridRowParams,
+  GridToolbar,
+  GridToolbarContainer,
   GridToolbarContainerProps,
   useGridRootProps,
-  GridToolbarContainer,
-  GridToolbarColumnsButton,
-  GridToolbarFilterButton,
-  GridToolbarDensitySelector,
-  GridToolbarExport,
 } from "@mui/x-data-grid-pro";
-import { forwardRef, useCallback, useState } from "react";
+import { forwardRef, useCallback } from "react";
 import { TableEventEntry } from ".";
 import { ErrorPanel } from "./ErrorPanel";
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverlay";
@@ -46,11 +43,11 @@ export function TableGrid({
       pageSizeOptions={[10, 25]}
       columnVisibilityModel={visibleColumns}
       initialState={datagridInitialState}
-      disableColumnFilter
+      // disableColumnFilter
       // unstable_headerFilters
       slots={{
         headerFilterMenu: null,
-        // toolbar: GridCustomToolbar,
+        // toolbar: GridToolbar,
         noRowsOverlay: CustomNoRowsOverlay,
       }}
       slotProps={{
@@ -82,10 +79,7 @@ export function TableGrid({
 
 //   return (
 //     <GridToolbarContainer ref={ref} {...other}>
-//       <GridToolbarColumnsButton />
-//       <GridToolbarFilterButton />
-//       <GridToolbarDensitySelector />
-//       <GridToolbarExport />
+//       <GridToolbar />
 //     </GridToolbarContainer>
 //   );
 // });
