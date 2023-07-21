@@ -1,9 +1,11 @@
 import { useGoodEvents, useBadEvents } from "@/hooks";
-import { Grid } from "@mui/material";
+import { Fade, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { TableFilters } from "./TableFilters";
 import { TableGrid } from "./TableGrid";
 import { mergeTwo } from "./utils";
+import { TableColumnsControl } from "./TableColumnsControl";
+import { initialVisibilityState } from "./columnDefinitions";
 
 export type TableEventEntry = {
   app_id: string;
@@ -26,6 +28,9 @@ export function EventsTable() {
   const { badEvents } = useBadEvents();
   const [events, setEvents] = useState<TableEventEntry[]>([]);
   const [activeFilter, setActiveFilter] = useState<EventsFilterType>("all");
+  const [visibleColumns, setVisibleColumns] = useState<
+    Record<string | number, boolean>
+  >(initialVisibilityState);
 
   useEffect(() => {
     setEvents(mergeTwo(badEvents, goodEvents));
@@ -50,13 +55,38 @@ export function EventsTable() {
     return;
   }
 
+  function handleColumnsVisibilityChange(
+    columnVisibilityChange: Record<string | number, boolean>
+  ) {
+    setVisibleColumns(columnVisibilityChange);
+  }
+
   return (
-    <Grid container>
+    <Grid container rowGap={4}>
+      {Boolean(events.length) && (
+        <Fade
+          in={Boolean(events.length)}
+          style={{ transformOrigin: "0 0 0" }}
+          timeout={1000}
+        >
+          <Grid container item xs={12} alignItems="center">
+            <Grid item xs={8}>
+              <TableColumnsControl
+                handleColumnsVisibilityChange={handleColumnsVisibilityChange}
+                visibleColumns={visibleColumns}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TableFilters
+                handleFilter={handleFilter}
+                activeFilter={activeFilter}
+              />
+            </Grid>
+          </Grid>
+        </Fade>
+      )}
       <Grid item xs={12}>
-        <TableFilters handleFilter={handleFilter} activeFilter={activeFilter} />
-      </Grid>
-      <Grid item xs={12}>
-        <TableGrid events={events} />
+        <TableGrid events={events} visibleColumns={visibleColumns} />
       </Grid>
     </Grid>
   );

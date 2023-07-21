@@ -9,6 +9,7 @@ type EventEntry = {
     parameters: {
       eid: string;
       dtm: string;
+      aid: string;
     };
   } & Record<string, unknown>;
   schema: string;
@@ -74,7 +75,7 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
       event,
       rawEvent,
       rawEvent: {
-        parameters: { eid, dtm },
+        parameters: { eid, dtm, aid },
       },
       collectorPayload,
       errors,
@@ -84,6 +85,7 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
     let schema = testJson.data.payload.enriched.schema;
     let newEvent: TableEventEntry = {
       ...defaultBadEventEntry,
+      app_id: aid,
       contexts,
       id: eid,
       timestamp: dtm,
@@ -107,7 +109,7 @@ function buildGoodEventEntryList(goodEvents: EventEntry[]) {
       contexts,
       event,
       rawEvent: {
-        parameters: { eid, dtm },
+        parameters: { eid, dtm, aid },
       },
       rawEvent,
       schema,
@@ -116,6 +118,7 @@ function buildGoodEventEntryList(goodEvents: EventEntry[]) {
     } = goodEvents[i];
     let newEvent: TableEventEntry = {
       ...defaultGoodEventEntry,
+      app_id: aid,
       id: eid,
       timestamp: dtm,
       contexts,
