@@ -25,6 +25,7 @@ export function EventsTable() {
   const { goodEvents } = useGoodEvents();
   const { badEvents } = useBadEvents();
   const [events, setEvents] = useState<TableEventEntry[]>([]);
+  const [activeFilter, setActiveFilter] = useState<EventsFilterType>("all");
 
   useEffect(() => {
     setEvents(mergeTwo(badEvents, goodEvents));
@@ -44,6 +45,7 @@ export function EventsTable() {
       default:
         throw "Not implemented filter type";
     }
+    setActiveFilter(eventsFilterType);
     setEvents(events);
     return;
   }
@@ -51,7 +53,7 @@ export function EventsTable() {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <TableFilters handleFilter={handleFilter} />
+        <TableFilters handleFilter={handleFilter} activeFilter={activeFilter} />
       </Grid>
       <Grid item xs={12}>
         <TableGrid events={events} />

@@ -7,7 +7,15 @@ import { Display, ResetButton } from "./common";
 
 export function Content() {
   return (
-    <Box sx={{ maxWidth: "1260px", backgroundColor: "#f2f4f7" }} p={3}>
+    <Box
+      sx={{
+        maxWidth: "1260px",
+        backgroundColor: "#f2f4f7",
+        display: "flex",
+        margin: "0 auto",
+      }}
+      p={3}
+    >
       <Grid container spacing={2} rowGap={2}>
         <Grid container item xs={12} alignItems="center">
           <Grid item xs={10}>

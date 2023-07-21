@@ -445,7 +445,7 @@ export const muiTheme: ThemeOptions = {
       fontWeight: theme.fontWeight.bold,
       letterSpacing: "0px",
       lineHeight: "24px",
-      //TODO: the default font doesnt appear to get attached to these custom variants. Re-adding here until I can work out why not
+      //TODO: the default font doesn't appear to get attached to these custom variants. Re-adding here until I can work out why not
       fontFamily: "Roboto, sans-serif",
     },
     body1italic: {
