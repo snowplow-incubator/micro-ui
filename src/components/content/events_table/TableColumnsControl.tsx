@@ -27,6 +27,10 @@ export function TableColumnsControl({
       />
       <FormGroup sx={{ flexDirection: "row", justifyContent: "flex-start" }}>
         {Object.entries(visibleColumns).map(([fieldKey, visibility]) => {
+          if (fieldKey.match("__")) {
+            return null;
+          }
+
           return (
             <FormControlLabel
               sx={{ marginLeft: 0 }}
@@ -38,6 +42,7 @@ export function TableColumnsControl({
                   name={fieldKey}
                 />
               }
+              // @ts-expect-error
               label={headerNameKeys[fieldKey]}
             />
           );

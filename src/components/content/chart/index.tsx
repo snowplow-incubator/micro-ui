@@ -17,7 +17,7 @@ import { Bar } from "react-chartjs-2";
 import { getDefaultBarChartOptions } from "./options";
 import { aggregateMicroDataset } from "./utils";
 import { Box } from "@mui/material";
-import { draw, generate } from "patternomaly";
+import { draw } from "patternomaly";
 
 ChartJS.register(
   CategoryScale,
@@ -56,6 +56,7 @@ export function EventChart() {
       datasets: [
         {
           label: "Good",
+          // @ts-expect-error
           data: goodDataset,
           backgroundColor: draw("dot", "#0B7F86"),
           barPercentage: 0.8,
@@ -65,6 +66,7 @@ export function EventChart() {
           label: "Bad",
           barPercentage: 0.8,
           categoryPercentage: 0.7,
+          // @ts-expect-error
           data: badDataset,
           backgroundColor: "#DD3327",
         },

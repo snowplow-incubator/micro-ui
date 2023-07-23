@@ -1,16 +1,18 @@
 import {
   DataGridPro,
   GridRowParams,
-  GridToolbar,
   GridToolbarContainer,
   GridToolbarContainerProps,
+  GridToolbarQuickFilter,
   useGridRootProps,
 } from "@mui/x-data-grid-pro";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { forwardRef, useCallback } from "react";
 import { TableEventEntry } from ".";
 import { ErrorPanel } from "./ErrorPanel";
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverlay";
 import { columns } from "./columnDefinitions";
+import { Tooltip, Typography } from "@mui/material";
 
 const datagridInitialState = {
   pagination: { paginationModel: { pageSize: 10 } },
@@ -43,18 +45,10 @@ export function TableGrid({
       pageSizeOptions={[10, 25]}
       columnVisibilityModel={visibleColumns}
       initialState={datagridInitialState}
-      // disableColumnFilter
-      // unstable_headerFilters
       slots={{
         headerFilterMenu: null,
-        // toolbar: GridToolbar,
+        toolbar: GridCustomToolbar,
         noRowsOverlay: CustomNoRowsOverlay,
-      }}
-      slotProps={{
-        toolbar: {
-          showQuickFilter: true,
-          quickFilterProps: { debounceMs: 500 },
-        },
       }}
       getDetailPanelContent={getErrorPanel}
       autoHeight
@@ -62,24 +56,43 @@ export function TableGrid({
   );
 }
 
-// export const GridCustomToolbar = forwardRef<
-//   HTMLDivElement,
-//   GridToolbarContainerProps
-// >(function GridToolbar(props, ref) {
-//   const { className, ...other } = props;
-//   const rootProps = useGridRootProps();
+export const GridCustomToolbar = forwardRef<
+  HTMLDivElement,
+  GridToolbarContainerProps
+>(function GridToolbar(props, ref) {
+  const { className, ...other } = props;
+  const rootProps = useGridRootProps();
 
-//   if (
-//     rootProps.disableColumnFilter &&
-//     rootProps.disableColumnSelector &&
-//     rootProps.disableDensitySelector
-//   ) {
-//     return null;
-//   }
+  // if (
+  //   rootProps.disableColumnFilter &&
+  //   rootProps.disableColumnSelector &&
+  //   rootProps.disableDensitySelector
+  // ) {
+  //   return null;
+  // }
 
-//   return (
-//     <GridToolbarContainer ref={ref} {...other}>
-//       <GridToolbar />
-//     </GridToolbarContainer>
-//   );
-// });
+  return (
+    <GridToolbarContainer
+      sx={{ display: "flex", alignSelf: "end" }}
+      ref={ref}
+      {...other}
+    >
+      <Tooltip
+        placement="left"
+        title={
+          <>
+            <Typography variant="body1">
+              You can filter based on all event properties using the format:{" "}
+              <br /> <code>$param=$value</code> <br /> e.g.
+              <br />
+              <code>eid=123456789</code>
+            </Typography>
+          </>
+        }
+      >
+        <InfoOutlinedIcon />
+      </Tooltip>
+      <GridToolbarQuickFilter />
+    </GridToolbarContainer>
+  );
+});
