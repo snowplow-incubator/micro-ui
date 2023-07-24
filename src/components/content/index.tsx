@@ -11,7 +11,6 @@ export function Content() {
       sx={{
         maxWidth: "1260px",
         backgroundColor: "#f2f4f7",
-        display: "flex",
         margin: "0 auto",
       }}
       p={3}
