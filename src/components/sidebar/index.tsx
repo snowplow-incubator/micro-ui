@@ -1,19 +1,11 @@
-import { Flex, Heading, VStack, useTheme } from "@chakra-ui/react";
+import { Box } from "@mui/material";
 
 export function Sidebar() {
-  const theme = useTheme();
   return (
-    <Flex
-      w="15%"
-      flexDir="column"
-      alignItems="center"
-      backgroundColor={theme.colors.secondary}
+    <Box
+      sx={{ width: { sm: 240 }, flexShrink: { sm: 0 }, background: "#1D1034" }}
     >
-      <VStack spacing={4}>
-        <Heading as="h3" color="white">
-          Micro UI
-        </Heading>
-      </VStack>
-    </Flex>
+      Todo
+    </Box>
   );
 }

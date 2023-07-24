@@ -1,76 +1,41 @@
-import { useEventTotals } from "@/hooks";
-import {
-  Box,
-  Flex,
-  Stat,
-  StatGroup,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
-} from "@chakra-ui/react";
+import Box from "@mui/material/Box";
 import { EventChart } from "./chart";
-import { EventsTable } from "./events-table";
+import { EventsTable } from "./events_table";
+import { StatsCards } from "./stats";
+import Grid from "@mui/material/Grid";
+import { Display, ResetButton } from "./common";
 
 export function Content() {
-  const { eventTotals, error, isLoading } = useEventTotals();
   return (
-    <Box maxW={1000}>
-      <Flex
-        borderWidth={1}
-        borderRadius={12}
-        borderColor="gray"
-        padding={5}
-        m={5}
-      >
-        <StatGroup>
-          <TotalEventsStat />
-          <GoodEventsStat />
-          <BadEventsStat />
-        </StatGroup>
-      </Flex>
-      <Flex>
-        <EventChart />
-      </Flex>
-
-      <Flex>
-        <EventsTable />
-      </Flex>
+    <Box
+      sx={{
+        maxWidth: "1260px",
+        backgroundColor: "#f2f4f7",
+        display: "flex",
+        margin: "0 auto",
+      }}
+      p={3}
+    >
+      <Grid container spacing={2} rowGap={2}>
+        <Grid container item xs={12} alignItems="center">
+          <Grid item xs={10}>
+            <StatsCards />
+          </Grid>
+          <Grid item xs={2}>
+            <ResetButton />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Display title="Micro Event Stream" subtitle="(Last 15 Minutes)">
+            <EventChart />
+          </Display>
+        </Grid>
+        <Grid item xs={12}>
+          <Display title="Events Table">
+            <EventsTable />
+          </Display>
+        </Grid>
+      </Grid>
     </Box>
-  );
-}
-
-export function GoodEventsStat() {
-  const { eventTotals } = useEventTotals();
-
-  return (
-    <Stat>
-      <StatLabel>Good Events ✅</StatLabel>
-      <StatNumber>{eventTotals?.good}</StatNumber>
-      <StatHelpText>Number of Good Events recorded</StatHelpText>
-    </Stat>
-  );
-}
-
-export function BadEventsStat() {
-  const { eventTotals } = useEventTotals();
-
-  return (
-    <Stat>
-      <StatLabel>Bad Events 🔴</StatLabel>
-      <StatNumber>{eventTotals?.bad}</StatNumber>
-      <StatHelpText>Number of Bad Events recorded</StatHelpText>
-    </Stat>
-  );
-}
-
-export function TotalEventsStat() {
-  const { eventTotals } = useEventTotals();
-
-  return (
-    <Stat>
-      <StatLabel>Total Events ⭐</StatLabel>
-      <StatNumber>{eventTotals?.total}</StatNumber>
-      <StatHelpText>Total Events recorded</StatHelpText>
-    </Stat>
   );
 }
