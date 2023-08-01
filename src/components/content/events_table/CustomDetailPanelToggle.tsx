@@ -25,9 +25,9 @@ export function CustomDetailPanelToggle(
   // If the value is not a valid React element, it means that the row has no detail panel.
   const hasDetail = isValidElement(contentCache[id]);
 
-  if (isValid) {
-    return null;
-  }
+  // if (isValid) {
+  //   return null;
+  // }
 
   return (
     <IconButton
