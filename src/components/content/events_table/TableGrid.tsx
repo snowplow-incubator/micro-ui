@@ -13,6 +13,7 @@ import { ErrorPanel } from "./ErrorPanel";
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverlay";
 import { columns } from "./columnDefinitions";
 import { Tooltip, Typography } from "@mui/material";
+import { GoodRowPanel } from "./GoodRowPanel";
 
 const datagridInitialState = {
   pagination: { paginationModel: { pageSize: 10 } },
@@ -33,7 +34,7 @@ export function TableGrid({
 }) {
   const getErrorPanel = useCallback(
     ({ row }: GridRowParams) =>
-      row.valid === false ? <ErrorPanel row={row} /> : null,
+      row.valid === false ? <ErrorPanel row={row} /> : <GoodRowPanel row={row} />,
     []
   );
 
