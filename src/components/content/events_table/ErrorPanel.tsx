@@ -3,11 +3,13 @@ import { Stack, Paper, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false });
 
-type ErrorAttribute = {
-  errors: string[];
+type ErrorPanelProps = {
+  row: {
+    errors: string[];
+  };
 };
 
-export function ErrorPanel({ row: rowProp }: { row: ErrorAttribute }) {
+export function ErrorPanel({ row }: ErrorPanelProps) {
   return (
     <Stack
       sx={{ py: 2, height: "100%", boxSizing: "border-box" }}
@@ -18,11 +20,11 @@ export function ErrorPanel({ row: rowProp }: { row: ErrorAttribute }) {
           <Typography variant="body2" color="textSecondary">
             Error Details
           </Typography>
-          <Typography variant="body1">{rowProp.errors[0]}</Typography>
+          <Typography variant="body1">{row.errors[0]}</Typography>
           <DynamicReactJson
             collapsed={3}
             quotesOnKeys={false}
-            src={JSON.parse(rowProp.errors[1])}
+            src={JSON.parse(row.errors[1])}
           />
         </Stack>
       </Paper>
