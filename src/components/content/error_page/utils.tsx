@@ -37,8 +37,8 @@ export function extractUIErrorInfo({ data }: { data: any }) {
     }
 
     return {
-        errorType: data.failure.messages[0].error.error,
-        errorMessage: data.failure.messages[0].error.error,
+        errorType: errorType,
+        errorMessage: errorMessage,
         pageUrl: data.payload.enriched.page_url,
         eventId: data.payload.enriched.event_id,
         errorTimestamp: data.failure.timestamp,
