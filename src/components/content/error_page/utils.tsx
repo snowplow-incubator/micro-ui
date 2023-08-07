@@ -16,7 +16,6 @@ export function extractUIErrorInfo({ data }: { data: any }) {
     var errorType = "Error"
 
     const error = data?.failure?.messages[0]?.error?.error || null
-    console.log(data)
 
     switch (error) {
         case "ValidationError":
