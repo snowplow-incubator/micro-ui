@@ -110,7 +110,8 @@ export function Navigation() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer sx={{ background: "#1D1034" }} variant="permanent" open={open}>
+      <Drawer sx={{ background: "#1D1034" }} variant="permanent" open={open} onClick={toggleDrawer}
+      >
         <Toolbar
           sx={{
             display: "flex",
