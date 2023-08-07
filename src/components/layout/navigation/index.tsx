@@ -1,10 +1,13 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ErrorIcon from '@mui/icons-material/Error';
 
 import {
   Divider,
   IconButton,
+  Link,
   List,
   ListItemButton,
   ListItemIcon,
@@ -89,7 +92,7 @@ export function Navigation() {
             }}
             onClick={toggleDrawer}
           >
-            <MenuIcon />
+            <ChevronRightIcon />
           </IconButton>
           <Typography variant="h3" component="div">
             <Typography
@@ -121,16 +124,31 @@ export function Navigation() {
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
-        <Divider color="white" />
+        {/* <Divider color="white" /> */}
         <List component="nav">
-          <ListItemButton sx={{ marginLeft: "5px" }}>
+          <ListItemButton sx={{ marginLeft: "5px" }} >
             <ListItemIcon sx={{ color: "white", minWidth: "49px" }}>
               <DashboardIcon />
             </ListItemIcon>
-            <ListItemText
-              primaryTypographyProps={{ variant: "h4" }}
-              primary="Dashboard"
-            />
+            <Link href="/" sx={{ color: "white", minWidth: "49px", textDecoration: "none" }}>
+              <ListItemText
+                primaryTypographyProps={{ variant: "h4" }}
+                primary="Dashboard"
+
+              />
+            </Link>
+          </ListItemButton>
+          <ListItemButton sx={{ marginLeft: "5px" }} >
+            <ListItemIcon sx={{ color: "white", minWidth: "49px" }}>
+              <ErrorIcon />
+            </ListItemIcon>
+            <Link href="/errors" sx={{ color: "white", minWidth: "49px", textDecoration: "none" }} >
+              <ListItemText
+                primaryTypographyProps={{ variant: "h4" }}
+                primary="Errors"
+
+              />
+            </Link>
           </ListItemButton>
           <ListItemButton sx={{ marginLeft: "5px" }}>
             <ListItemIcon sx={{ color: "white", minWidth: "49px" }}>
