@@ -28,7 +28,7 @@ export function ErrorTimeline({ data, callback, activeEid }: { data: any, callba
                     </TimelineItem>
                 )
             })}
-            <TimelineItem sx={{ cursor: "pointer" }} key={1} onClick={() => handleCallback(1)}>
+            <TimelineItem sx={{ cursor: "pointer" }} key={1}>
                 <TimelineSeparator>
                     <TimelineDot color="secondary" variant="filled" />
                 </TimelineSeparator>
