@@ -12,6 +12,29 @@ export function extractUIErrorInfo({ data }: { data: any }) {
     const { name: browserName, version: browserVersion } = parser.getBrowser();
     const { type: deviceType } = parser.getDevice();
     const { name: osName, version: osVersion } = parser.getOS();
+    var errorMessage = [{ message: "N/A" }]
+    var errorType = "Error"
+
+    const error = data?.failure?.messages[0]?.error?.error || null
+    console.log(data)
+
+    switch (error) {
+        case "ValidationError":
+            errorType = data.failure.messages[0].error.error
+            errorMessage = data.failure.messages[0].error.dataReports
+            break
+        case "ResolutionError":
+            errorType = data.failure.messages[0].error.error
+            errorMessage = [{ message: data.failure.messages[0].error.lookupHistory[0].errors[0].error }]
+            break
+        case null:
+            errorType = "Unknown Error"
+            errorMessage = [{ message: data.failure.messages[0].message.expectation }]
+        default:
+            break
+    } {
+
+    }
 
     return {
         errorType: data.failure.messages[0].error.error,
