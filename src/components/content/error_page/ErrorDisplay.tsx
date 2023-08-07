@@ -49,7 +49,7 @@ export function ErrorDisplay({ singleError }: { singleError: any }) {
                         <b>{errorType}</b>
                     </Typography>
                     <Typography variant="h4" color={"gray"}>
-                        {errorMessage}
+                        Error whilst validating the event
                     </Typography>
                 </Grid>
                 <Grid
@@ -84,11 +84,16 @@ export function ErrorDisplay({ singleError }: { singleError: any }) {
                 </Grid>
             </Grid>
             <Typography
-                variant="h4"
+                variant="h5"
                 paddingTop={3}
                 paddingBottom={2}
             >
-                <b>Details: </b>{errorMessage}
+                <b>Details: </b>
+                {errorMessage.map((error: any, i: number) => {
+                    return (
+                        <p key={i}>- {error.message}</p>
+                    )
+                })}
             </Typography>
             <Divider sx={{ margin: "10px 0" }} />
             <Grid container spacing={1} justifyContent={"flex-start"} paddingTop={2} paddingBottom={2}>

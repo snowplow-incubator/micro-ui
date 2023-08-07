@@ -30,6 +30,7 @@ export function extractUIErrorInfo({ data }: { data: any }) {
         case null:
             errorType = "Unknown Error"
             errorMessage = [{ message: data.failure.messages[0].message.expectation }]
+            break
         default:
             break
     } {
