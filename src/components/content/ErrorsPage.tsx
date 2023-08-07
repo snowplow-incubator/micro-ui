@@ -5,7 +5,6 @@ import { ErrorDisplay } from './error_page/ErrorDisplay'
 
 import { ErrorTimeline } from "./error_page/ErrorTimeline";
 import { CustomNoRowsOverlay } from "./common/CustomNoRowsOverlay";
-import { StatsCards } from "./stats";
 import { ResetButton } from "./common/ResetButton";
 
 export function ErrorsPage() {
