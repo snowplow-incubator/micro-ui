@@ -1,4 +1,7 @@
 import { TableEventEntry } from ".";
+import { v4 as uuidv4 } from 'uuid';
+
+
 
 type EventEntry = {
   id: string;
@@ -78,10 +81,17 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
       errors,
     } = badEvents[i]
 
-    let aid, eid, dtm = ""
+
+    let eid, dtm, aid
 
     if (rawEvent?.parameters) {
-      let { parameters: { eid, dtm, aid } } = rawEvent
+      eid = rawEvent.parameters.eid
+      aid = rawEvent.parameters.aid
+      dtm = rawEvent.parameters.dtm
+    } else {
+      eid = uuidv4();
+      aid = "null"
+      dtm = "null"
     }
 
     let testJson = JSON.parse(errors[1]);
@@ -89,10 +99,10 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
     let schema = testJson.data.payload.enriched?.schema || null;
     let newEvent: TableEventEntry = {
       ...defaultBadEventEntry,
-      app_id: aid || "null",
+      app_id: aid,
       contexts,
-      id: eid || "null",
-      timestamp: dtm || "null",
+      id: eid,
+      timestamp: dtm,
       event,
       rawEvent,
       schema,
