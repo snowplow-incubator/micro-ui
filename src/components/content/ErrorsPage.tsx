@@ -20,14 +20,15 @@ export function ErrorsPage() {
       return
     }
     const singleError = JSON.parse(badEvents[badEvents.length - 1].errors[1])
-    const eid = singleError.data.payload.enriched.event_id
+
+    const eid = singleError.data.payload.enriched?.event_id
     setActiveEid(eid)
   }, [isLoading])
 
   useEffect(() => {
     badEvents?.forEach((error: any) => {
       const singleError = JSON.parse(error.errors[1])
-      const eid = singleError.data.payload.enriched.event_id
+      const eid = singleError.data.payload.enriched?.event_id
       if (eid == activeEid) {
         setSingleError(singleError)
       }

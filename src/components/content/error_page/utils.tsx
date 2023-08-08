@@ -15,7 +15,7 @@ export function extractUIErrorInfo({ data }: { data: any }) {
     var errorMessage = [{ message: "N/A" }]
     var errorType = "Error"
 
-    const error = data?.failure?.messages[0]?.error?.error || null
+    const error = data?.failure?.messages[0]?.error?.error || schema
 
     switch (error) {
         case "ValidationError":
@@ -28,7 +28,7 @@ export function extractUIErrorInfo({ data }: { data: any }) {
             break
         case null:
             errorType = "Unknown Error"
-            errorMessage = [{ message: data.failure.messages[0].message.expectation }]
+            errorMessage = [{ message: data.failure.messages[0].message?.expectation }]
             break
         default:
             break
@@ -39,20 +39,20 @@ export function extractUIErrorInfo({ data }: { data: any }) {
     return {
         errorType: errorType,
         errorMessage: errorMessage,
-        pageUrl: data.payload.enriched.page_url,
-        eventId: data.payload.enriched.event_id,
+        pageUrl: data.payload.enriched?.page_url,
+        eventId: data.payload.enriched?.event_id,
         errorTimestamp: data.failure.timestamp,
         browserName,
         browserVersion,
         deviceType,
         osName,
         osVersion,
-        userId: data.payload.enriched.user_id,
-        domainUserId: data.payload.enriched.domain_userid,
-        appId: data.payload.enriched.app_id,
+        userId: data.payload.enriched?.user_id,
+        domainUserId: data.payload.enriched?.domain_userid,
+        appId: data.payload.enriched?.app_id,
         // Check if we have friendly names list for trackers based on v_tracker
-        trackerVersion: data.payload.enriched.v_tracker,
-        platform: data.payload.enriched.platform,
+        trackerVersion: data.payload.enriched?.v_tracker,
+        platform: data.payload.enriched?.platform,
         schema: data.failure.messages[0].schemaKey
     };
 }

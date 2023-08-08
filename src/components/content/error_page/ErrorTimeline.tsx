@@ -13,10 +13,9 @@ export function ErrorTimeline({ data, callback, activeEid }: { data: any, callba
         }} position="left">
             {data.map((error: any) => {
                 const singleError = JSON.parse(error.errors[1])
-                const eid = singleError.data.payload.enriched.event_id
+                const eid = singleError.data.payload.enriched?.event_id || "0"
                 return (
                     <TimelineItem sx={{ cursor: "pointer" }} key={eid} onClick={() => handleCallback(eid)}>
-
                         <TimelineSeparator>
                             <TimelineDot color="primary" variant={activeEid == eid ? "filled" : "outlined"} />
                             <TimelineConnector />

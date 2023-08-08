@@ -46,7 +46,7 @@ export function EventChart() {
     );
     const badDataset = aggregateMicroDataset(
       badEvents,
-      (event) => (event.rawEvent.parameters.dtm * 1000) / 1000
+      (event) => (event?.rawEvent?.parameters.dtm * 1000) / 1000
     );
 
     const hasEvents = Boolean(goodDataset.length && badDataset.length);
