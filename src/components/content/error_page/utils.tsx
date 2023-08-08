@@ -5,15 +5,15 @@ import { UAParser } from "ua-parser-js";
 // or is `singleError.data.failure.messages[0].error.dataReports[0].path` the path to the event structure
 // maybe it is the path data.payload.enriched.unstruct_event .data.${path} in the case of unstruct event failure
 
-export function extractUIErrorInfo({ data }: { data: any }) {
-    const userAgent = data.payload.enriched.useragent;
+export function extractUIErrorInfo({ data, schema }: { data: any, schema: string }) {
+    const userAgent = data.payload.enriched?.useragent;
     const parser = new UAParser(userAgent);
 
     const { name: browserName, version: browserVersion } = parser.getBrowser();
     const { type: deviceType } = parser.getDevice();
     const { name: osName, version: osVersion } = parser.getOS();
     var errorMessage = [{ message: "N/A" }]
-    var errorType = "Error"
+    var errorType
 
     const error = data?.failure?.messages[0]?.error?.error || schema
 
@@ -25,6 +25,26 @@ export function extractUIErrorInfo({ data }: { data: any }) {
         case "ResolutionError":
             errorType = data.failure.messages[0].error.error
             errorMessage = [{ message: data.failure.messages[0].error.lookupHistory[0].errors[0].error }]
+            break
+        case "iglu:com.snowplowanalytics.snowplow.badrows/tracker_protocol_violations/jsonschema/1-0-0":
+            errorType = "Tracker Protocol Violation"
+            errorMessage = [{ message: data.failure.messages[0].error }]
+            break
+        case "iglu:com.snowplowanalytics.snowplow.badrows/adapter_failures/jsonschema/1-0-0":
+            errorType = "Adapter Failure"
+            errorMessage = [{ message: data.failure.messages[0].error || "N/A" }]
+            break
+        case "iglu:com.snowplowanalytics.snowplow.badrows/collector_payload_format_violation/jsonschema/1-0-0":
+            errorType = "Collector Payload Format violation"
+            errorMessage = [{ message: data.failure.messages[0].error || "N/A" }]
+            break
+        case "iglu:com.snowplowanalytics.snowplow.badrows/enrichment_failures/jsonschema/2-0-1":
+            errorType = "Enrichment Failure"
+            errorMessage = [{ message: data.failure.messages[0].error || "N/A" }]
+            break
+        case "iglu:com.snowplowanalytics.snowplow.badrows/size_violation/jsonschema/1-0-0":
+            errorType = "Size Violation"
+            errorMessage = [{ message: data.failure.messages[0].error || "N/A" }]
             break
         case null:
             errorType = "Unknown Error"
