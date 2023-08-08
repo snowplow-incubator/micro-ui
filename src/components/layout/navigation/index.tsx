@@ -151,7 +151,7 @@ export function Navigation() {
               />
             </Link>
           </ListItemButton>
-          <ListItemButton sx={{ marginLeft: "5px" }}>
+          {/* <ListItemButton sx={{ marginLeft: "5px" }}>
             <ListItemIcon sx={{ color: "white", minWidth: "49px" }}>
               <SettingsOutlinedIcon />
             </ListItemIcon>
@@ -159,7 +159,7 @@ export function Navigation() {
               primaryTypographyProps={{ variant: "h4" }}
               primary="Config"
             />
-          </ListItemButton>
+          </ListItemButton> */}
         </List>
       </Drawer>
     </>
