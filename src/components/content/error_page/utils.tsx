@@ -52,6 +52,8 @@ export function extractUIErrorInfo({ data, schema }: { data: any, schema: string
             break
         default:
             errorType = "Unknown Error"
+            errorMessage = [{ message: data.failure.messages[0].message?.expectation }]
+
             break
     } {
 
