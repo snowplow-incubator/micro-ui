@@ -52,7 +52,7 @@ export function ErrorsPage() {
         sx={{ margin: "0 auto" }}
       >
 
-        <Grid item sx={{ display: "flex", height: "fit-content" }} md={1}>
+        <Grid item sx={{ display: "flex", height: "fit-content" }} md={2}>
           <ErrorTimeline data={badEvents} callback={activeHandlerCallback} activeEid={activeEid} />
         </Grid>
         <Grid item justifyContent={"center"} md={8} sx={{ display: "flex", height: "fit-content" }}>

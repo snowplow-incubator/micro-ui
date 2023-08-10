@@ -10,6 +10,8 @@ export function ErrorTimeline({ data, callback, activeEid }: { data: any, callba
                 flex: 0,
                 padding: 0,
             },
+            maxHeight: "70vh",
+            overflowY: 'scroll'
         }} position="left">
             {data.map((error: any) => {
                 const singleError = JSON.parse(error.errors[1])
