@@ -13,7 +13,7 @@ export function ErrorTimeline({ data, callback, activeEid }: { data: any, callba
             maxHeight: "70vh",
             overflowY: 'scroll'
         }} position="left">
-            {data.map((error: any) => {
+            {data.map((error: any, i: number) => {
                 const singleError = JSON.parse(error.errors[1])
                 const eid = singleError.data.payload.enriched?.event_id || "0"
                 return (

@@ -1,7 +1,4 @@
 import { TableEventEntry } from ".";
-import { v4 as uuidv4 } from 'uuid';
-
-
 
 type EventEntry = {
   id: string;
@@ -89,7 +86,7 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
       aid = rawEvent.parameters.aid
       dtm = rawEvent.parameters.dtm
     } else {
-      eid = uuidv4();
+      eid = "null"
       aid = "null"
       dtm = "null"
     }
