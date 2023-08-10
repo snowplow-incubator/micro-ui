@@ -51,6 +51,7 @@ export function extractUIErrorInfo({ data, schema }: { data: any, schema: string
             errorMessage = [{ message: data.failure.messages[0].message?.expectation }]
             break
         default:
+            errorType = "Unknown Error"
             break
     } {
 
@@ -76,3 +77,72 @@ export function extractUIErrorInfo({ data, schema }: { data: any, schema: string
         schema: data.failure.messages[0].schemaKey
     };
 }
+
+// type ValidationError = {
+//     schema: string,
+//     data: {
+//         processor: {
+//             artifact: string,
+//             version: string
+//         },
+//         failure: {
+//             timestamp: string,
+//             messages: [
+//                 {
+//                     schemaKey: string,
+//                     error: {
+//                         error: string
+//                         dataReports: [
+//                             {
+//                                 message: string,
+//                                 path: string,
+//                                 keyword: string,
+//                                 targets: [string]
+//                             }
+//                         ]
+//                     }
+//                 }
+//             ]
+//         },
+//         payload: {
+//             enriched: Object,
+//             raw: Object
+//         }
+//     }
+// }
+
+// type ResolutionError = {
+//     schema: string,
+//     data: {
+//         processor: {
+//             artifact: string,
+//             version: string,
+//         },
+//         failure: {
+//             timestamp: string,
+//             messages: [
+//                 {
+//                     schemaKey: string,
+//                     error: {
+//                         error: string,
+//                         lookupHistory: [{
+//                             repository: string,
+//                             errors: [
+//                                 {
+//                                     error: string
+//                                 }
+//                             ],
+//                             attempts: number,
+//                             lastAttempt: string
+//                         }]
+//                     }
+//                 }
+//             ]
+//         },
+//         payload: {
+//             enriched: object,
+//             raw: object
+//         }
+//     }
+// }
+//   // const errorMessage =  singleError.data.failure.messages[0].error.dataReports[0].message;
