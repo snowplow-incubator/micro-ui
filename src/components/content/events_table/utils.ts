@@ -74,15 +74,26 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
       contexts,
       event,
       rawEvent,
-      rawEvent: {
-        parameters: { eid, dtm, aid },
-      },
       collectorPayload,
       errors,
-    } = badEvents[i];
+    } = badEvents[i]
+
+
+    let eid, dtm, aid
+
+    if (rawEvent?.parameters) {
+      eid = rawEvent.parameters.eid
+      aid = rawEvent.parameters.aid
+      dtm = rawEvent.parameters.dtm
+    } else {
+      eid = "null"
+      aid = "null"
+      dtm = "null"
+    }
+
     let testJson = JSON.parse(errors[1]);
-    let eventType = testJson.data.payload.enriched.event;
-    let schema = testJson.data.payload.enriched.schema;
+    let eventType = testJson.data.payload.enriched?.event || null;
+    let schema = testJson.data.payload.enriched?.schema || null;
     let newEvent: TableEventEntry = {
       ...defaultBadEventEntry,
       app_id: aid,

@@ -10,7 +10,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { forwardRef, useCallback } from "react";
 import { TableEventEntry } from ".";
 import { ErrorPanel } from "./ErrorPanel";
-import { CustomNoRowsOverlay } from "./CustomNoRowsOverlay";
+import { CustomNoRowsOverlay } from "../common/CustomNoRowsOverlay";
 import { columns } from "./columnDefinitions";
 import { Tooltip, Typography } from "@mui/material";
 import { GoodRowPanel } from "./GoodRowPanel";

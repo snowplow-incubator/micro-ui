@@ -1074,18 +1074,18 @@ export const muiTheme: ThemeOptions = {
         },
       },
     },
-    MuiListItemIcon: {
-      styleOverrides: {
-        root: {
-          minWidth: 0,
-          marginRight: "8px",
-          "&.MuiListItemIcon-root": {
-            minWidth: 0,
-            marginRight: "16px",
-          },
-        },
-      },
-    },
+    // MuiListItemIcon: {
+    //   styleOverrides: {
+    //     root: {
+    //       minWidth: 0,
+    //       marginRight: "8px",
+    //       "&.MuiListItemIcon-root": {
+    //         minWidth: 0,
+    //         marginRight: "16px",
+    //       },
+    //     },
+    //   },
+    // },
     MuiPopover: {
       styleOverrides: {
         root: {
@@ -1097,12 +1097,12 @@ export const muiTheme: ThemeOptions = {
             "&:hover": {
               background: theme.color.grey["100"],
             },
-            ".MuiListItemIcon-root": {
-              fontSize: theme.fontSize.large,
-              ".MuiSvgIcon-root": {
-                fill: theme.color.grey["800"],
-              },
-            },
+            // ".MuiListItemIcon-root": {
+            //   fontSize: theme.fontSize.large,
+            //   ".MuiSvgIcon-root": {
+            //     fill: theme.color.grey["800"],
+            //   },
+            // },
           },
           ".MuiDivider-root": {
             borderColor: theme.color.grey["100"],

@@ -1,5 +1,5 @@
 import { Box, SvgIcon } from "@mui/material";
-import SnowplowLogo from "./logo.svg";
+import SnowplowLogo from "../common/logo.svg";
 
 export function CustomNoRowsOverlay() {
   return (
