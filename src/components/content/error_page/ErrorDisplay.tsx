@@ -97,6 +97,7 @@ export function ErrorDisplay({ singleError }: { singleError: any }) {
             </Typography>
             <Divider sx={{ margin: "10px 0" }} />
             <Grid container spacing={1} justifyContent={"flex-start"} paddingTop={2} paddingBottom={2}>
+                <ErrorTag attribute="event id" value={eventId} />
                 <ErrorTag attribute="schema" value={schema} />
                 <ErrorTag attribute="tracker version" value={trackerVersion} />
                 <ErrorTag
