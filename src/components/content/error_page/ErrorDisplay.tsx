@@ -107,7 +107,7 @@ export function ErrorDisplay({ singleError }: { singleError: any }) {
                 <ErrorTag attribute="operating system" value={osName} />
                 <ErrorTag attribute="operating system version" value={osVersion} />
             </Grid>
-            <Grid container spacing={1} justifyContent={"flex-start"} paddingTop={2} paddingBottom={2}>
+            <Grid container spacing={1} alignItems={"flex-start"} paddingTop={2} paddingBottom={2} direction='column'>
                 <IconButton
                     size="small"
                     tabIndex={-1}
@@ -117,11 +117,11 @@ export function ErrorDisplay({ singleError }: { singleError: any }) {
                 </IconButton>
                 {openError &&
                     <Stack
-                        sx={{ py: 2, height: "100%", boxSizing: "border-box" }}
+                        sx={{ height: "100%", width: "100%", boxSizing: "border-box" }}
                         direction="column"
                     >
-                        <Paper sx={{ flex: 1, mx: "auto", p: 1 }}>
-                            <Stack direction="column" spacing={1} sx={{ height: 1 }}>
+                        <Paper sx={{ flex: 1, overflowX: 'scroll' }}>
+                            <Stack direction="column" sx={{ height: 1 }}>
                                 <DynamicReactJson
                                     collapsed={3}
                                     quotesOnKeys={false}
