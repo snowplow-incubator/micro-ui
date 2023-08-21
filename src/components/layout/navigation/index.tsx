@@ -20,6 +20,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MuiDrawer from "@mui/material/Drawer";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
+import { useRouter } from 'next/router';
 
 const drawerWidth: number = 200;
 
@@ -74,6 +75,7 @@ export function Navigation() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const router = useRouter();
 
   return (
     <>
@@ -131,7 +133,7 @@ export function Navigation() {
             <ListItemIcon sx={{ color: "white", minWidth: "49px" }}>
               <DashboardIcon />
             </ListItemIcon>
-            <Link href="/" sx={{ color: "white", minWidth: "49px", textDecoration: "none" }}>
+            <Link href={`${router.basePath}/`} sx={{ color: "white", minWidth: "49px", textDecoration: "none" }}>
               <ListItemText
                 primaryTypographyProps={{ variant: "h4" }}
                 primary="Dashboard"
@@ -143,7 +145,7 @@ export function Navigation() {
             <ListItemIcon sx={{ color: "white", minWidth: "49px" }}>
               <ErrorIcon />
             </ListItemIcon>
-            <Link href="/errors" sx={{ color: "white", minWidth: "49px", textDecoration: "none" }} >
+            <Link href={`${router.basePath}/errors`} sx={{ color: "white", minWidth: "49px", textDecoration: "none" }} >
               <ListItemText
                 primaryTypographyProps={{ variant: "h4" }}
                 primary="Errors"

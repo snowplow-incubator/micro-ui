@@ -28,7 +28,9 @@ const nextConfig = {
 
     return config;
   },
-  output: "standalone",
+  output: "export",
+  distDir: "out/ui",
+  basePath: '/micro/ui',
 };
 
 module.exports = nextConfig;

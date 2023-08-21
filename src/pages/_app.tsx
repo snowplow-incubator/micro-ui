@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import { useRouter } from 'next/router';
 
 import { muiTheme as mui } from "../theme";
 import {
@@ -16,6 +17,8 @@ const rubik = Rubik({ subsets: ["latin"] });
 const muiTheme = createTheme(mui);
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+
   return (
     <MuiThemeProvider theme={muiTheme}>
       <style jsx global>{`
@@ -26,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Micro UI</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.webp" />
+        <link rel="icon" href={`${router.basePath}/favicon.webp`} />
       </Head>
       <CssBaseline />
       <Layout>
