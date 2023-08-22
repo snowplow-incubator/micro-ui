@@ -19,6 +19,8 @@ export type TableEventEntry = {
   collectorPayload: string[];
   errors: string[];
   valid?: boolean;
+  eventName: string;
+  eventVendor: string;
 };
 
 export type EventsFilterType = "all" | "good" | "bad";

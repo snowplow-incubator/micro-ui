@@ -55,6 +55,7 @@ export const columns: GridColDef[] = [
   },
   { field: "app_id", headerName: "App Id" },
   { field: "eventType", headerName: "Event Type" },
+  { field: "eventName", headerName: "Event Name" },
   {
     field: "valid",
     renderCell: (params) => {
@@ -87,11 +88,14 @@ export const columns: GridColDef[] = [
     headerName: "Timestamp",
     minWidth: 175,
   },
-  { field: "schema", headerName: "Schema", width: 350 },
+  { field: "schema", headerName: "Schema", width: 480 },
+  { field: "eventVendor", headerName: "Event Vendor", width: 250 },
 ];
 
 const initiallyHiddenColumns = {
   __payload: false,
+  eventVendor: false,
+  eventType: false
 };
 
 const fieldColumnsVisibility = columns
