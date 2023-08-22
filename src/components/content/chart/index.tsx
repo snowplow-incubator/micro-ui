@@ -15,7 +15,7 @@ import "chartjs-adapter-luxon";
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { getDefaultBarChartOptions } from "./options";
-import { aggregateMicroDataset } from "./utils";
+import { aggregateMicroDatasets } from "./utils";
 import { Box } from "@mui/material";
 import { draw } from "patternomaly";
 
@@ -40,14 +40,13 @@ export function EventChart() {
       return;
     }
 
-    const goodDataset = aggregateMicroDataset(
-      goodEvents,
-      (event) => event.event.derived_tstamp
-    );
-    const badDataset = aggregateMicroDataset(
-      badEvents,
-      (event) => (event?.rawEvent?.parameters.dtm * 1000) / 1000
-    );
+    const { goodDataset, badDataset } =
+      aggregateMicroDatasets(
+        goodEvents,
+        badEvents,
+        (event) => event.event.derived_tstamp,
+        (event) => (event?.rawEvent?.parameters.dtm * 1000) / 1000
+      )
 
     const hasEvents = Boolean(goodDataset.length || badDataset.length);
     setOptions(getDefaultBarChartOptions(hasEvents));
