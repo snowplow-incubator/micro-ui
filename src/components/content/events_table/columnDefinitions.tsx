@@ -48,7 +48,11 @@ export const columns: GridColDef[] = [
         value += makeObjectKeyString(params.row.rawEvent.parameters, value);
       }
       if (params.row.event) {
-        value += makeObjectKeyString(params.row.event, value);
+        try {
+          value += makeObjectKeyString(params.row.event, value);
+        } catch (err) {
+          console.log(err)
+        }
       }
       return value;
     },
