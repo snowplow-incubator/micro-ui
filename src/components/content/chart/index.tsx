@@ -49,7 +49,7 @@ export function EventChart() {
       (event) => (event?.rawEvent?.parameters.dtm * 1000) / 1000
     );
 
-    const hasEvents = Boolean(goodDataset.length && badDataset.length);
+    const hasEvents = Boolean(goodDataset.length || badDataset.length);
     setOptions(getDefaultBarChartOptions(hasEvents));
 
     setBaChartData({
