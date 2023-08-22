@@ -63,9 +63,9 @@ export function EventsTable() {
 
   return (
     <Grid container rowGap={4}>
-      {Boolean(events.length) && (
+      {Boolean(events.length || (goodEvents || badEvents)) && (
         <Fade
-          in={Boolean(events.length)}
+          in={Boolean(events)}
           style={{ transformOrigin: "0 0 0" }}
           timeout={1000}
         >
