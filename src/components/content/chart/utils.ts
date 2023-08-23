@@ -39,7 +39,7 @@ export function aggregateMicroDatasets(
   badTimestampPropertyAccessor: (element: any) => unknown
 ) {
 
-  var emptyChartDict = Object()
+  const emptyChartDict: any = {};
   const now = new Date().setSeconds(0, 0)
 
   // Create object with keys for last 15 minutes 
