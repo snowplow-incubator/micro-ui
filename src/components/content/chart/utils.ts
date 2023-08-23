@@ -21,6 +21,17 @@ function getEventsDict(events: any[], dict: any, timestampPropertyAccessor: (ele
   return getEventsMap(dict)
 }
 
+
+/**
+ *
+ * Aggregate the good and bad events datasets to minute-level counts for usage in a X,Y access of a Chart.js Bar.
+ * @export
+ * @param {any[]} goodEvents
+ * @param {any[]} badEvents
+ * @param {(element: any) => unknown} goodTimestampPropertyAccessor Accessor function for the good events timestamp we wish to use for ordering.
+ * @param {(element: any) => unknown} badTimestampPropertyAccessor Accessor function for the bad events timestamp we wish to use for ordering.
+ * @return {*, *}
+ */
 export function aggregateMicroDatasets(
   goodEvents: any[],
   badEvents: any[],
@@ -28,15 +39,16 @@ export function aggregateMicroDatasets(
   badTimestampPropertyAccessor: (element: any) => unknown
 ) {
 
-  var dict = Object()
+  var emptyChartDict = Object()
   const now = new Date().setSeconds(0, 0)
 
+  // Create object with keys for last 15 minutes 
   for (let i = 0; i < 15; i++) {
     const timestamp = (now - (i * 60000)).toString()
-    dict[timestamp] = 0
+    emptyChartDict[timestamp] = 0
   }
-  const goodDataset = getEventsDict(goodEvents, { ...dict }, goodTimestampPropertyAccessor)
-  const badDataset = getEventsDict(badEvents, { ...dict }, badTimestampPropertyAccessor)
+  const goodDataset = getEventsDict(goodEvents, { ...emptyChartDict }, goodTimestampPropertyAccessor)
+  const badDataset = getEventsDict(badEvents, { ...emptyChartDict }, badTimestampPropertyAccessor)
 
   return { goodDataset, badDataset }
 }
