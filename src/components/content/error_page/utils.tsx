@@ -15,45 +15,41 @@ export function extractUIErrorInfo({ data, schema }: { data: any, schema: string
     var errorMessage = [{ message: "N/A" }]
     var errorType
 
-    const error = data?.failure?.messages[0]?.error?.error || schema
+    const schemaArray = schema.split("/")
+    const error = data?.failure?.messages[0]?.error?.error || schemaArray[1]
 
     switch (error) {
         case "ValidationError":
-            errorType = data.failure.messages[0].error.error
+            errorType = "Validation Error"
             errorMessage = data.failure.messages[0].error.dataReports
             break
         case "ResolutionError":
-            errorType = data.failure.messages[0].error.error
+            errorType = "Resolution Error"
             errorMessage = [{ message: data.failure.messages[0].error.lookupHistory[0].errors[0].error }]
             break
-        case "iglu:com.snowplowanalytics.snowplow.badrows/tracker_protocol_violations/jsonschema/1-0-0":
+        case "tracker_protocol_violations":
             errorType = "Tracker Protocol Violation"
             errorMessage = [{ message: data.failure.messages[0].error }]
             break
-        case "iglu:com.snowplowanalytics.snowplow.badrows/adapter_failures/jsonschema/1-0-0":
+        case "adapter_failures":
             errorType = "Adapter Failure"
             errorMessage = [{ message: data.failure.messages[0].error || "N/A" }]
             break
-        case "iglu:com.snowplowanalytics.snowplow.badrows/collector_payload_format_violation/jsonschema/1-0-0":
+        case "collector_payload_format_violation":
             errorType = "Collector Payload Format violation"
             errorMessage = [{ message: data.failure.messages[0].error || "N/A" }]
             break
-        case "iglu:com.snowplowanalytics.snowplow.badrows/enrichment_failures/jsonschema/2-0-1":
+        case "enrichment_failures":
             errorType = "Enrichment Failure"
-            errorMessage = [{ message: data.failure.messages[0].error || "N/A" }]
+            errorMessage = [{ message: data.failure.messages[0].message.expectation }, { message: data.failure.messages[0].message.field }]
             break
-        case "iglu:com.snowplowanalytics.snowplow.badrows/size_violation/jsonschema/1-0-0":
+        case "size_violation":
             errorType = "Size Violation"
             errorMessage = [{ message: data.failure.messages[0].error || "N/A" }]
-            break
-        case null:
-            errorType = "Unknown Error"
-            errorMessage = [{ message: data.failure.messages[0].message?.expectation }]
             break
         default:
             errorType = "Unknown Error"
             errorMessage = [{ message: data.failure.messages[0].message?.expectation }]
-
             break
     } {
 

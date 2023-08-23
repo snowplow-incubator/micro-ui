@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography, Stack, Paper, IconButton } from "@mui/material";
+import { Divider, Grid, Typography, Stack, Paper, IconButton, Button } from "@mui/material";
 import { DateTime } from "luxon";
 import { useState } from "react";
 import dynamic from "next/dynamic";
@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 const DynamicReactJson = dynamic(import("react-json-view"), { ssr: false });
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { extractUIErrorInfo } from './utils'
 import { ErrorTag } from './ErrorTag'
 
@@ -30,9 +31,13 @@ export function ErrorDisplay({ singleError }: { singleError: any }) {
     } = extractUIErrorInfo(singleError);
 
     const [openError, setOpenError] = useState(false)
+    const [collapseLevel, setCollapseLevel] = useState(3)
 
     function handleOpen() {
         setOpenError(!openError)
+    }
+    function handleCollapseLevel(x: number) {
+        setCollapseLevel(x)
     }
 
     return (
@@ -109,14 +114,38 @@ export function ErrorDisplay({ singleError }: { singleError: any }) {
                 <ErrorTag attribute="operating system version" value={osVersion} />
             </Grid>
             <Grid container spacing={1} alignItems={"flex-start"} paddingTop={2} paddingBottom={2} direction='column'>
-                <IconButton
-                    size="small"
-                    tabIndex={-1}
-                    onClick={handleOpen}
-                >
-                    <AddCircleOutlineIcon fontSize="inherit" />View Detail
-                </IconButton>
+                <Grid sx={{ '& button': { m: 1 } }}>
+                    <IconButton
+                        size="small"
+                        tabIndex={-1}
+                        onClick={handleOpen}
+                    >
+                        {openError ?
+                            <> <RemoveCircleOutlineIcon fontSize="inherit" />Hide Detail</> :
+                            <> <AddCircleOutlineIcon fontSize="inherit" />View Detail</>
+                        }
+                    </IconButton>
+                    {openError &&
+                        <>
+                            <Button
+                                onClick={() => handleCollapseLevel(1)}
+                                variant="outlined"
+                                size="small"
+                            >
+                                Collapse All
+                            </Button>
+                            <Button
+                                onClick={() => handleCollapseLevel(6)}
+                                variant="outlined"
+                                size="small"
+                            >
+                                Expand All
+                            </Button>
+                        </>}
+                </Grid>
                 {openError &&
+
+
                     <Stack
                         sx={{ height: "100%", width: "100%", boxSizing: "border-box" }}
                         direction="column"
@@ -124,7 +153,7 @@ export function ErrorDisplay({ singleError }: { singleError: any }) {
                         <Paper sx={{ flex: 1, overflowX: 'scroll' }}>
                             <Stack direction="column" sx={{ height: 1 }}>
                                 <DynamicReactJson
-                                    collapsed={3}
+                                    collapsed={collapseLevel}
                                     quotesOnKeys={false}
                                     src={singleError}
                                 />
@@ -133,6 +162,7 @@ export function ErrorDisplay({ singleError }: { singleError: any }) {
                     </Stack>}
             </Grid>
         </Paper >
+
     )
 
 }

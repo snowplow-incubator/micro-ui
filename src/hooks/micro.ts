@@ -14,7 +14,8 @@ export function useEventTotals() {
   type EventTotals = { bad: number; good: number; total: number };
   const { data, error, isLoading } = useSWR<EventTotals>(
     MICRO_ALL_URL,
-    fetcher
+    fetcher,
+    { refreshInterval: 3000 }
   );
 
   useSetDocumentTitle(
@@ -43,7 +44,7 @@ export function useGoodEvents() {
 }
 
 export function useBadEvents() {
-  const { data, error, isLoading } = useSWR(MICRO_BAD_URL, fetcher);
+  const { data, error, isLoading } = useSWR(MICRO_BAD_URL, fetcher, { refreshInterval: 3000 });
   return {
     badEvents: data,
     error,

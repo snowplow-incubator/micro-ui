@@ -3,7 +3,12 @@ import { TableEventEntry } from ".";
 type EventEntry = {
   id: string;
   contexts: string[];
-  event: Record<string, unknown>;
+  event: Record<string, unknown> &
+  {
+    event_id: string,
+    event_name: string,
+    event_vendor: string
+  };
   eventType: string;
   rawEvent: {
     parameters: {
@@ -78,18 +83,13 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
       errors,
     } = badEvents[i]
 
+    const eid = (rawEvent.parameters.eid && rawEvent.parameters.eid) || (event.event_id && event.event_id) || "null"
+    const aid = (rawEvent.parameters.aid && rawEvent.parameters.aid) || "null"
+    const dtm = (rawEvent.parameters.dtm && rawEvent.parameters.dtm) || "null"
+    const eventName = (event?.event_name && event?.event_name)
+    const eventVendor = (event?.event_vendor && event?.event_vendor) || "Error"
+    const rowId = eid.concat(i.toString())
 
-    let eid, dtm, aid
-
-    if (rawEvent?.parameters) {
-      eid = rawEvent.parameters.eid
-      aid = rawEvent.parameters.aid
-      dtm = rawEvent.parameters.dtm
-    } else {
-      eid = "null"
-      aid = "null"
-      dtm = "null"
-    }
 
     let testJson = JSON.parse(errors[1]);
     let eventType = testJson.data.payload.enriched?.event || null;
@@ -98,7 +98,7 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
       ...defaultBadEventEntry,
       app_id: aid,
       contexts,
-      id: eid,
+      id: rowId,
       timestamp: dtm,
       event,
       rawEvent,
@@ -106,6 +106,8 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
       collectorPayload,
       errors,
       eventType,
+      eventName,
+      eventVendor
     };
     merged.push(newEvent);
   }
@@ -119,18 +121,23 @@ function buildGoodEventEntryList(goodEvents: EventEntry[]) {
     let {
       contexts,
       event,
-      rawEvent: {
-        parameters: { eid, dtm, aid },
-      },
       rawEvent,
       schema,
       collectorPayload,
       eventType,
     } = goodEvents[i];
+
+    const eid = (rawEvent.parameters.eid && rawEvent.parameters.eid) || (event.event_id && event.event_id) || "null"
+    const aid = (rawEvent.parameters.aid && rawEvent.parameters.aid) || "null"
+    const dtm = (rawEvent.parameters.dtm && rawEvent.parameters.dtm) || "null"
+    const eventName = (event?.event_name && event?.event_name) || "Error"
+    const eventVendor = (event?.event_vendor && event?.event_vendor) || "Error"
+    const rowId = eid.concat(i.toString())
+
     let newEvent: TableEventEntry = {
       ...defaultGoodEventEntry,
       app_id: aid,
-      id: eid,
+      id: rowId,
       timestamp: dtm,
       contexts,
       event,
@@ -138,6 +145,8 @@ function buildGoodEventEntryList(goodEvents: EventEntry[]) {
       schema,
       collectorPayload,
       eventType,
+      eventName,
+      eventVendor
     };
     merged.push(newEvent);
   }
