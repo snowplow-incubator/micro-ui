@@ -83,11 +83,11 @@ export function buildBadEventEntryList(badEvents: EventEntry[]) {
       errors,
     } = badEvents[i]
 
-    const eid = (rawEvent.parameters.eid && rawEvent.parameters.eid) || (event.event_id && event.event_id) || "null"
-    const aid = (rawEvent.parameters.aid && rawEvent.parameters.aid) || "null"
-    const dtm = (rawEvent.parameters.dtm && rawEvent.parameters.dtm) || "null"
-    const eventName = (event?.event_name && event?.event_name)
-    const eventVendor = (event?.event_vendor && event?.event_vendor) || "Error"
+    const eid = rawEvent?.parameters?.eid || event?.event_id || "null"
+    const aid = rawEvent?.parameters?.aid || "null"
+    const dtm = rawEvent?.parameters?.dtm || "null"
+    const eventName = event?.event_name
+    const eventVendor = event?.event_vendor || "Error"
     const rowId = eid.concat(i.toString())
 
 
@@ -127,11 +127,11 @@ function buildGoodEventEntryList(goodEvents: EventEntry[]) {
       eventType,
     } = goodEvents[i];
 
-    const eid = (rawEvent.parameters.eid && rawEvent.parameters.eid) || (event.event_id && event.event_id) || "null"
-    const aid = (rawEvent.parameters.aid && rawEvent.parameters.aid) || "null"
-    const dtm = (rawEvent.parameters.dtm && rawEvent.parameters.dtm) || "null"
-    const eventName = (event?.event_name && event?.event_name) || "Error"
-    const eventVendor = (event?.event_vendor && event?.event_vendor) || "Error"
+    const eid = rawEvent?.parameters?.eid || event?.event_id || "null"
+    const aid = rawEvent?.parameters?.aid || "null"
+    const dtm = rawEvent?.parameters?.dtm || "null"
+    const eventName = event?.event_name || "Error"
+    const eventVendor = event?.event_vendor || "Error"
     const rowId = eid.concat(i.toString())
 
     let newEvent: TableEventEntry = {
